@@ -19,14 +19,35 @@ jobs:
           context: .
           push: true
           tags: pchmykh/pfw2:latest
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
 
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: apply -f phpapplication.yaml
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+      - name: Install kubectl
+        uses: hashicorp/setup-kubectl@v1.0.1
+      - name: Apply Kubernetes manifest
+        uses: super-ralph/kubernetes-manifest-action@v1.4
+        with:
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          manifest_file_path: phpapplication.yaml
+
+
+            #  deploy:
+            #    name: Deploy
+            # runs-on: ubuntu-latest
+
+            #   steps:
+            #      - uses: actions/checkout@v1
+            #      - uses: actions-hub/kubectl@master
+            #        env:
+            #          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+            #        with:
+            #          args: apply -f phpapplication.yaml
