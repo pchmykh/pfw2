@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: pfw2
-          image: pchmykh/pfw2:002
+          image: pchmykh/pfw2:latest
           ports:
             - containerPort: 80
