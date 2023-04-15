@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpapp
+  labels:
+    app: phpapp
+spec:
+  #  replicas: 2
+  selector:
+    matchLabels:
+      project: fw2
+  template:
+    metadata:
+      labels:
+        project: fw2
+    spec:
+      containers:
+        - name: pfw2
+          image: pchmykh/pfw2:002
+          ports:
+            - containerPort: 80
