@@ -9,7 +9,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/index.php" #?
+        path: "/index1.php" #?
         backend:
           service:
             name: pfw2service
