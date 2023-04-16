@@ -1,7 +1,7 @@
 name: GitHub Actions building docker image
 on: [push]
 jobs:
-  docker_image_creation:
+  docker-image-creation:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -20,9 +20,9 @@ jobs:
           push: true
           tags: pchmykh/pfw2:latest
 
-  image_deployment:
+  image-deployment:
     runs-on: ubuntu-latest
-    needs: docker_image_creation
+    needs: docker-imagec-reation
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,7 +43,27 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          args: |
-           apply -f phpapp.yaml
-           kubectl apply -f service.yaml
-           kubectl apply -f ingress.yaml
+          args: apply -f phpapp.yaml
+
+  service-deployment:
+    runs-on: ubuntu-latest
+    needs: image-deployment
+    steps:
+      - name: deploy to cluster
+      uses: kodermax/kubectl-aws-eks@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+      with:
+        args: apply -f service.yaml
+
+  ingress-deployment:
+    runs-on: ubuntu-latest
+    needs: service-deployment
+    steps:
+        - name: deploy to cluster
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: apply -f ingress.yaml
+
