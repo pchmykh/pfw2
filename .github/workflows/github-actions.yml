@@ -21,8 +21,8 @@ jobs:
           tags: pchmykh/pfw2:latest
 
   image_deployment:
-    needs: docker_image_creation
     runs_on: ubuntu-latest
+    needs: docker_image_creation
     steps:
       - name: Checkout
         uses: actions/checkout@v2
