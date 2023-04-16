@@ -45,3 +45,5 @@ jobs:
         with:
           args: |
            apply -f phpapp.yaml
+           kubectl apply -f service.yaml
+           kubectl apply -f ingress.yaml
