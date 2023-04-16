@@ -32,6 +32,6 @@ jobs:
           aws-output: json
 
       - name: aws ecr credentials
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
 
