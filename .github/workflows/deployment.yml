@@ -29,8 +29,8 @@ jobs:
 
       - name: Apply Kubernetes manifests
         uses: actions-hub/kubectl@master
-          env:
-            KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
           #  KUBE_HOST: ${{ secrets.KUBE_HOST }}
           # KUBE_CERTIFICATE: ${{ secrets.KUBE_CERTIFICATE }}
           # KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
