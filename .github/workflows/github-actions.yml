@@ -20,7 +20,7 @@ jobs:
           push: true
           tags: pchmykh/pfw2:latest
 
-  aws_configure:
+  aws_credentials:
     runs-on: ubuntu-latest
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
@@ -29,6 +29,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
           aws-output: json
+
+  aws_ecr_auth:
+    runs-on: ubuntu-latest
+    needs: aws_credentials
+    uses: aws-actions/amazon-ecr-login@v1
 
   deploy:
     runs-on: ubuntu-latest
