@@ -26,4 +26,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-
+      - name: Apply Kubernetes manifests
+        uses: kubernetes-actions/kubectl@v1.2.1
+        with:
+          args: apply -f phpapp.yaml
+          kubeconfig: ${{ secrets.KUBECONFIG }}
