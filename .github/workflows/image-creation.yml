@@ -20,35 +20,24 @@ jobs:
           push: true
           tags: pchmykh/pfw2:latest
 
+  aws_configure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          aws-output: json
+
   deploy:
     runs-on: ubuntu-latest
     needs: docker_image_creation
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: actions/checkout@v1
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      - uses: actions-hub/kubectl@master
         with:
-          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-1
-      - name: Install kubectl
-        uses: hashicorp/setup-kubectl@v1.0.1
-      - name: Apply Kubernetes manifest
-        uses: super-ralph/kubernetes-manifest-action@v1.4
-        with:
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-          manifest_file_path: phpapplication.yaml
-
-
-            #  deploy:
-            #    name: Deploy
-            # runs-on: ubuntu-latest
-
-            #   steps:
-            #      - uses: actions/checkout@v1
-            #      - uses: actions-hub/kubectl@master
-            #        env:
-            #          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-            #        with:
-            #          args: apply -f phpapplication.yaml
+          args: apply -f phpapp.yaml
