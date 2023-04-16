@@ -35,12 +35,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-   aws_ecr_pushing:
-     runs-on: ubuntu-latest
-     needs: aws_credentials
-     steps:
-       - name: yaml files pushing 2 ecr
-         uses:
+  aws_ecr_pushing:
+    runs-on: ubuntu-latest
+    needs: aws_credentials
+    steps:
+      - name: yaml files pushing 2 ecr
+        uses:
 
            #  deploy:
            #    runs-on: ubuntu-latest
