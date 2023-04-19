@@ -143,5 +143,5 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          command: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && helm install prometheus prometheus-community/prometheus --set server.service.type=LoadBalancer
+          command:  helm repo add bitnami https://charts.bitnami.com/bitnami && helm repo update && helm install prometheuschart bitnami/kube-prometheus
 
