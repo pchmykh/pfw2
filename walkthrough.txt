@@ -4,4 +4,9 @@
 
 2. github repo pushing
 
-3. external ip checking */index1.php
+3. web app external ip checking */index1.php
+
+4. grafana external ip checking
+
+5. import some dashboards to grafana, for example 7249 15760
+
