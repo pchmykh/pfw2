@@ -168,10 +168,5 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          command:  helm repo add  grafana https://grafana.github.io/helm-charts && \
-            helm repo update && \
-            helm install grafanachart grafana/grafana \
-            --set adminPassword="secret" \
-            --set service.type=LoadBalancer \
-            --values datacource.yaml
+          command:  helm repo add  grafana https://grafana.github.io/helm-charts && helm repo update && helm install grafanachart grafana/grafana --set adminPassword="secret" --set service.type=LoadBalancer--values datacource.yaml
 
