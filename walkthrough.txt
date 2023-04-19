@@ -1,0 +1,7 @@
+1. cluster emerging
+
+2. adding kube_config to github repo
+
+2. github repo pushing
+
+3. external ip checking */index1.php

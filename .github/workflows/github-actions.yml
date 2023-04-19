@@ -120,3 +120,14 @@ jobs:
         with:
           args: apply -f ingress.yaml
 
+  prometheus-helm-deployment:
+    runs-on: ubuntu-latest
+    needs: ingress-deployment
+    steps:
+      - name: prometheus helm deployment
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          command: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && helm install prometheus prometheus-community/prometheus --set server.service.type=LoadBalancer
+
