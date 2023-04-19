@@ -168,4 +168,10 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with:
-          command:  helm repo add  grafana https://grafana.github.io/helm-charts && helm repo update && helm install grafanachart grafana/grafana --set adminPassword='secret' --set service.type=LoadBalancer --set datasources.datasources.yaml.apiVersion=1 --set datasources.datasources.yaml.datacources[0].name=Prometheus --set datasources.datasources.yaml.datacources[0].type=prometheus --set datasources.datasources.yaml.datacources[0].url=http://prometheuschart-kube-promet-prometheus.default.svc.cluster.local:9090 --set datasources.datasources.yaml.datacources[0].access=proxy --set datasources.datasources.yaml.datacources[0].isDefault=true
+          command:  helm repo add  grafana https://grafana.github.io/helm-charts && \
+            helm repo update && \
+            helm install grafanachart grafana/grafana \
+            --set adminPassword="secret" \
+            --set service.type=LoadBalancer \
+            --values datacource.yaml
+
